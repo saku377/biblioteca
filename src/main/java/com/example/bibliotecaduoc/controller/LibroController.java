@@ -19,6 +19,7 @@ import com.example.bibliotecaduoc.model.Libro;
 import com.example.bibliotecaduoc.service.LibroService;
 import jakarta.validation.Valid;
 
+
 /**
  * Controller REST modernizado para Java 21 LTS y Spring Boot 3.3+ 100% REST compliant
  */
@@ -79,4 +80,10 @@ public class LibroController {
                 int total = libroService.totalLibrosV2();
                 return ResponseEntity.ok(total);
         }
+
+        @GetMapping("/editorial/{editorial}")
+        public List<Libro> selectEditorial(@PathVariable String editorial) {
+        return libroService.obtenerPorEditorial(editorial);
+    }
+        
 }

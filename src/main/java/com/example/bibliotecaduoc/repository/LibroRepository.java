@@ -3,6 +3,9 @@ package com.example.bibliotecaduoc.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.example.bibliotecaduoc.model.Libro;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import java.util.List;
 
 @Repository
 // public class LibroRepository {
@@ -100,8 +103,23 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
     // public int totalLibros() {
     // return listaLibros.size();
     // }
+
+    // Consulta nativa simple
+    @Query(value = "SELECT * FROM libros WHERE editorial = :editorial", nativeQuery = true)
+    List<Libro> selectPorEditorial(@Param("editorial") String editorial);
+    //otra alternativa   
+    // Libro findByEmailCustom(@Param("editorial") String editorial);
+ 
+ 
+    // Consulta con JOINs nativos
+   // @Query(value = "SELECT l.* FROM libros l INNER JOIN editorial e ON l.editorial = e.editorial WHERE e.editorial = ?1", 
+    //       nativeQuery = true)
+   // List<Libro> findByRoleName(String roleName);
+
+
     default int totalLibros() {
         return (int) this.count(); // ← "this" se refiere a la instancia del repository
     }
+    
 
 }
